@@ -80,6 +80,8 @@ void mute(void)
 }
 
 void unmute(void) {
+
+    // XXX: 最初の 1 回はキーが効かないので，1 回余計に押し，メニューが出るまで待つためにウェイトを長くしている
     for (uint8_t c = 0; c < N_VOL_UPS_TO_UNMUTE + 1; ++c)
     {
         bleKeyboard.write(KEY_MEDIA_VOLUME_UP);
