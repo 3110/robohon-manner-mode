@@ -1,19 +1,21 @@
-# VSCode上のPlatformIO環境でM5Stackの開発をするための雛形
+# ロボホン用マナーモードボタン
 
-M5Stack製品のプログラムをVSCode上のPlatformIO環境で書くための雛形です。
+[ATOM Lite](https://shop.m5stack.com/collections/m5-atom/products/atom-lite-esp32-development-kit)をBLEキーボードにして，ボタンを押すたびにミュート（マナーモード）したりミュートを解除したりします。
 
-1つのリポジトリで複数のM5Stack製品に対応したソースコードをビルドするのにも利用することもできます。製品依存のコードはそれぞれ「個別のソースの置き場所」に置くと，その製品がビルド対象になっているときだけコンパイルされます。共通のコードで場合分けが必要な場合は，「個別に定義される定数」で場合分けできます。
+## ペアリング
 
-| `default_envs` | 個別のソースの置き場所 | 個別に定義される定数 |
-| :--- | :--- | :--- |
-| `m5stack`  | `src/m5stack`   | `TARGET_M5STACK`  |
-| `m5stickc` | `src/m5stickc` | `TARGET_M5STICKC` |
-| `m5atom`   | `src/m5atom`    | `TARGET_M5ATOM`   |
-| `m5paper`  | `src/m5paper`   | `TARGET_M5PAPER`  |
+1. ペアリングしていない状態ではATOM LiteのLEDが赤く光ります。LEDが青く光っている場合は既にデバイスとペアリングされています。
+2. ロボホンの「設定」アイコンをタッチし，メニューから「Bluetooth」をタッチします。
+3. 下の方にある「新しいデバイスとペア設定をする」をタッチし，「RoBoHoN Mute Button」をタッチしてペアリングします。
+4. 「ペア設定したデバイス」に「RoBoHoN Mute Button」が表示され，「接続」と表示されていることを確認してくさださい。
+5. ペアリングが完了するとLEDが1秒間青く光ります。
+6. この後，起動時はミュートが解除されている状態として開始し（ロボホン実機の状態を表すわけではない），LEDがミュートの解除を示す黄色に光ります。
 
-VSCodeのステータスバー（画面下）にある「Switch ProjectIO Project Environment」を押すと，環境の切り替えメニューが画面上に表示され，`platformio.ino`の`default_envs`を書き換えずに環境を切り替えることができます。
+## ミュートの設定・解除
 
-<a href="https://gyazo.com/af334af4d5dc119864deaffbe21f44cd"><img src="https://i.gyazo.com/af334af4d5dc119864deaffbe21f44cd.png" alt="環境の切り替えメニュー" width="600"/></a>
+ボタンを押すとミュートに設定（ボリュームダウンボタンを7回押す）し，LEDが黄色に変わります。もう一度押すと，ミュートを解除（ボリュームアップボタンを3回押す）します。
 
-`platformio.ino`の`[env]`セクションにある`build_flags`で`ENABLE_SERIAL_MONITOR`を定義すると，`common.h`にあるシリアル周りのマクロ定義が有効になり，シリアル表示のコードを挿入します。また，MACアドレスを表示するためのマクロ定義も追加されます。このマクロ定義を使ってデバッグ用の表示コードを書いておくと，不要なときは表示コードを挿入しないようにすることができます。
+**注意**：ロボホン本体のマナーモードの物理スイッチがオフで，ロボホンの目が光っている間にしか効きませんので注意してください。
+
+
 
